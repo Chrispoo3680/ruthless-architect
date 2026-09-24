@@ -12,6 +12,15 @@ Never use broad staging such as `git add .` merely to satisfy this gate when unr
 
 The command accepts no `--model` or `--effort` flag. It uses the Codex CLI default. Read `~/.codex/config.toml` (`model` and `model_reasoning_effort`) and tell the user which routing the review will actually receive. Never append model/effort text as if it were a supported flag.
 
+Recommended review configuration in `~/.codex/config.toml`:
+
+```toml
+model = "gpt-6-sol"
+model_reasoning_effort = "xhigh"
+```
+
+GPT-6 Sol is the default for all Codex roles. Astra costs roughly 2.5-5x more per token and uses ChatGPT Plus quota about twice as fast, while Sol at `high`/`xhigh` stays within a few points of Astra on coding benchmarks. If the configured model differs, report the actual routing rather than claiming the recommended one. Changing the config also changes the default for any `/codex:rescue` call without `--model`.
+
 A suitable command must include:
 
 - `--background` unless the user prefers `--wait`;
@@ -34,10 +43,16 @@ If Codex must operate in a shared worktree, capture a pre-dispatch git baseline 
 
 `/codex:rescue` is model-invocable and accepts `--model` and `--effort`. Model slugs and effort values are separate; never invent a combined slug such as `<model>-ultra`.
 
-Preferred routing while these installed slugs remain valid:
+Preferred routing (GPT-6 family) while these installed slugs remain valid:
 
-- ordinary feature work, CRUD, UI, normal integrations: `--model gpt-5.6-terra --effort high`
-- difficult algorithms, concurrency/state, system-level logic, broad integration risk: `--model gpt-5.6-sol --effort medium`
+- ordinary feature work, CRUD, UI, normal integrations: `--model gpt-6-sol --effort high`
+- difficult algorithms, concurrency/state, system-level logic, broad integration risk: `--model gpt-6-sol --effort xhigh`
+
+`gpt-6-astra` is an explicit escalation, not a default route. Offer it (`--model gpt-6-astra --effort medium`) only when the user approves the extra quota spend and either a Sol unit has used up its repair budget without exposing a design defect, or the unit is unusually reasoning-dense and high-risk. `gpt-6-luna` is intended for focused, high-volume work such as extraction and summarization; it is not a default Ruthless Architect implementation route.
+
+If a GPT-6 slug is rejected for the account, fall back to the closest GPT-5.6 tier (`gpt-5.6-terra` for ordinary work, `gpt-5.6-sol` for difficult work) at the same effort and tell the user. Do not silently substitute a different tier.
+
+The plugin's `--effort` flag accepts only `none`, `minimal`, `low`, `medium`, `high`, and `xhigh`. The CLI's `max` and `ultra` levels are not reachable through `/codex:rescue`; never pass them.
 
 If the installed Codex CLI/plugin has changed, inspect its current help/source/config and use a supported replacement rather than guessing. Exact runtime truth beats this reference.
 
