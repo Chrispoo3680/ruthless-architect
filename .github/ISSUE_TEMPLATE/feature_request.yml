@@ -1,0 +1,24 @@
+name: Feature request
+description: Propose a change to routing, gates, runtimes, or repository tooling.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Concrete problem
+      description: Prefer an observed failure mode over a hypothetical optimization.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: New failure modes / tradeoffs
+    validations:
+      required: true
