@@ -109,6 +109,15 @@ cat ~/.codex/config.toml
 
 The runtime reference expects the review command to use the defaults from that file because the adversarial-review command does not accept invented model/effort flags.
 
+Recommended defaults when GPT-6.1 Sol is available to your account/client:
+
+```toml
+model = "gpt-6.1-sol"
+model_reasoning_effort = "xhigh"
+```
+
+Implementation uses `gpt-6.1-sol` at `high` for ordinary work and `xhigh` for difficult work. See [the Codex runtime contract](references/codex-runtime.md) for the benchmark rationale, Astra escalation, availability fallbacks, and the installed plugin's effort limits. The skill installer does not modify your Codex configuration; set these values before using the review gate and verify the actual routing.
+
 After installing/updating the Codex plugin, restart Claude Code or use its plugin reload mechanism if the commands do not appear.
 
 Do a dry verification in a disposable repository before the first real feature: ensure the review command accepts `--base <ref>` and the rescue command's installed help matches `references/codex-runtime.md`. If the plugin changes, update the reference rather than guessing.

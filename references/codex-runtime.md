@@ -15,11 +15,19 @@ The command accepts no `--model` or `--effort` flag. It uses the Codex CLI defau
 Recommended review configuration in `~/.codex/config.toml`:
 
 ```toml
-model = "gpt-6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "xhigh"
 ```
 
-GPT-6 Sol is the default for all Codex roles. Astra costs roughly 2.5-5x more per token and uses ChatGPT Plus quota about twice as fast, while Sol at `high`/`xhigh` stays within a few points of Astra on coding benchmarks. If the configured model differs, report the actual routing rather than claiming the recommended one. Changing the config also changes the default for any `/codex:rescue` call without `--model`.
+GPT-6.1 Sol is the preferred default for Codex review and implementation when available to the account/client. If the configured model differs, report the actual routing rather than claiming the recommended one. Changing the config also changes the default for any `/codex:rescue` call without `--model`.
+
+### Evidence for model selection (checked 2026-09-30)
+
+- OpenAI reports that GPT-6.1 Sol matches Astra on DeepSWE v1.1 at roughly one-fifth the task cost and exceeds GPT-6 Sol's best score by 6.4 percentage points at lower reasoning effort. This supports upgrading the coding default. Astra still leads on Terminal-Bench Science 0.1 at maximum effort (68.1%) and is recommended for the most difficult scientific research tasks. [Launch benchmarks](https://openai.com/index/introducing-gpt-6-1-sol/)
+- Astra retains a lead on security evaluations: SEC-Bench Pro pass@1 is 85.4% for Astra, 78.8% for GPT-6.1 Sol, and 66.3% for GPT-6 Sol. This supports retaining Astra as an option for especially difficult security work. [System card addendum](https://deploymentsafety.openai.com/gpt-6-1-sol/exploitbench---internal-port-juneaugust-2026)
+- GPT-6.1 Sol Standard API input/output prices are $2/$10 per million tokens, versus Astra's $10/$50. API prices and benchmark task costs do not establish a fixed ChatGPT subscription quota ratio. [Sol model documentation](https://developers.openai.com/api/docs/models/gpt-6.1-sol) · [Astra model documentation](https://developers.openai.com/api/docs/models/gpt-6-astra)
+
+These are provider evaluations in the stated harnesses, not measurements of this skill's adversarial plan review. The `high` implementation and `xhigh` difficult-work/review settings below preserve the existing workflow policy; the published results do not establish an optimal effort for every unit. Use actual project outcomes to refine effort. [Codex model guidance](https://learn.chatgpt.com/docs/models) recommends GPT-6.1 Sol for complex coding when available.
 
 A suitable command must include:
 
@@ -43,16 +51,16 @@ If Codex must operate in a shared worktree, capture a pre-dispatch git baseline 
 
 `/codex:rescue` is model-invocable and accepts `--model` and `--effort`. Model slugs and effort values are separate; never invent a combined slug such as `<model>-ultra`.
 
-Preferred routing (GPT-6 family) while these installed slugs remain valid:
+Preferred routing while these installed slugs remain valid:
 
-- ordinary feature work, CRUD, UI, normal integrations: `--model gpt-6-sol --effort high`
-- difficult algorithms, concurrency/state, system-level logic, broad integration risk: `--model gpt-6-sol --effort xhigh`
+- ordinary feature work, CRUD, UI, normal integrations: `--model gpt-6.1-sol --effort high`
+- difficult algorithms, concurrency/state, system-level logic, broad integration risk: `--model gpt-6.1-sol --effort xhigh`
 
-`gpt-6-astra` is an explicit escalation, not a default route. Offer it (`--model gpt-6-astra --effort medium`) only when the user approves the extra quota spend and either a Sol unit has used up its repair budget without exposing a design defect, or the unit is unusually reasoning-dense and high-risk. `gpt-6-luna` is intended for focused, high-volume work such as extraction and summarization; it is not a default Ruthless Architect implementation route.
+`gpt-6-astra` remains an explicit escalation. Offer it (`--model gpt-6-astra --effort medium`) only when the user approves the extra quota spend and either a GPT-6.1 Sol unit has used up its repair budget without exposing a design defect, or the unit is unusually reasoning-dense and high-risk, especially difficult scientific or security work. Maximum-effort benchmark results do not predict Astra's performance at `medium`; choose a higher supported effort only with task-specific justification and approval of the extra spend. `gpt-6-luna` remains intended for focused, repeatable work such as extraction and summarization; it is not a default Ruthless Architect implementation route.
 
-If a GPT-6 slug is rejected for the account, fall back to the closest GPT-5.6 tier (`gpt-5.6-terra` for ordinary work, `gpt-5.6-sol` for difficult work) at the same effort and tell the user. Do not silently substitute a different tier.
+If `gpt-6.1-sol` is unavailable to the account/client, report that limitation and use the prior `gpt-6-sol` route at the same effort only if it is available and still suitable for the unit. If GPT-6 Sol is also unavailable, retain the existing GPT-5.6 fallbacks (`gpt-5.6-terra` for ordinary work, `gpt-5.6-sol` for difficult work) at the same supported effort and tell the user. A fallback is not a claim of equivalent capability; recheck task fit before dispatch. For adversarial review, inspect the actual CLI configuration and report any fallback before composing the user-run command.
 
-The plugin's `--effort` flag accepts only `none`, `minimal`, `low`, `medium`, `high`, and `xhigh`. The CLI's `max` and `ultra` levels are not reachable through `/codex:rescue`; never pass them.
+GPT-6.1 Sol supports `low`, `medium`, `high`, `xhigh`, and `max`; it does not support `none` or `minimal`. The installed plugin's `--effort` flag accepts only `none`, `minimal`, `low`, `medium`, `high`, and `xhigh`, so the usable GPT-6.1 Sol efforts through `/codex:rescue` are `low`, `medium`, `high`, and `xhigh`. Never pass `max` or `ultra` through this plugin, or `none`/`minimal` to GPT-6.1 Sol. [Supported model efforts](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
 
 If the installed Codex CLI/plugin has changed, inspect its current help/source/config and use a supported replacement rather than guessing. Exact runtime truth beats this reference.
 

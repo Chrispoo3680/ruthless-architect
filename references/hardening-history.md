@@ -95,3 +95,9 @@ Hardening response:
 - retain Codex as the mandatory independent plan adversary;
 - require fresh-context review when Claude implemented materially consequential units;
 - add a two-focused-correction circuit breaker so stronger Claude does not become an excuse for infinite self-repair.
+
+## 2026-09-30 — Codex model refresh
+
+The user requested routing based on GPT-6.1 Sol's published capabilities. The prior runtime recommendation used GPT-6 Sol and included an unsupported fixed subscription-quota comparison. OpenAI's [GPT-6.1 Sol launch evaluations](https://openai.com/index/introducing-gpt-6-1-sol/) support the coding upgrade while retaining a scientific-work advantage for Astra; the [system card addendum](https://deploymentsafety.openai.com/gpt-6-1-sol) also shows remaining security capability gaps.
+
+The runtime now prefers GPT-6.1 Sol, preserves the existing `high`/`xhigh` effort policy, cites its evidence, and distinguishes measured API/task cost from subscription quota. Availability fallbacks require disclosure and a task-fit check. Model-supported effort and plugin-supported effort must both permit the selected value. The lifecycle gates and independent verification requirements continue to apply.

@@ -6,8 +6,14 @@ All notable changes to Ruthless Architect are recorded here.
 
 ### Changed
 
-- Codex routing moved to GPT-6 Sol: `gpt-6-sol --effort high` for ordinary work, `gpt-6-sol --effort xhigh` for difficult work, and `gpt-6-sol`/`xhigh` as the recommended adversarial-review config. `gpt-6-astra` is an approval-gated escalation because of its higher quota cost.
-- Documented the plugin's `xhigh` effort ceiling.
+- Codex routing moved to GPT-6.1 Sol: `gpt-6.1-sol --effort high` for ordinary work, `gpt-6.1-sol --effort xhigh` for difficult work, and `gpt-6.1-sol`/`xhigh` as the recommended adversarial-review config. Retained approval-gated Astra escalation and documented the remaining scientific/security benchmark gaps.
+- Added dated official benchmark/model sources, distinguished API pricing from subscription quota, and preserved effort policy without claiming benchmark proof of optimal review effort.
+- Added GPT-6 Sol as the availability fallback before the existing GPT-5.6 routes, subject to task suitability and disclosure.
+- Documented GPT-6.1 Sol's supported efforts and the plugin's `xhigh` ceiling; added the recommended review configuration to the setup guide.
+
+### Fixed
+
+- Quoted the skill description so its embedded colon parses as valid YAML frontmatter.
 
 ## [1.4.0] - 2026-09-24
 

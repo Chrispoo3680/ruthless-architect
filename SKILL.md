@@ -1,6 +1,6 @@
 ---
 name: ruthless-architect
-description: Use for substantial new features or high-risk changes that justify a gated lifecycle: optional Gemini reconnaissance, Claude requirements/design, explicit user approval, mandatory Codex adversarial plan review, direct implementation routing across deterministic tools/local/Claude/Gemini/Codex, and Claude-owned final acceptance. Do not use for routine fixes, tiny tweaks, or obviously mechanical changes.
+description: 'Use for substantial new features or high-risk changes that justify a gated lifecycle: optional Gemini reconnaissance, Claude requirements/design, explicit user approval, mandatory Codex adversarial plan review, direct implementation routing across deterministic tools/local/Claude/Gemini/Codex, and Claude-owned final acceptance. Do not use for routine fixes, tiny tweaks, or obviously mechanical changes.'
 ---
 
 # Ruthless Architect
